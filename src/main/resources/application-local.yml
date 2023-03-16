@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:30000/appdb?currentSchema=public
+    username: appuser
+    password: strongpasswordapp
+    jpa:
+      show-sql: true
+      properties:
+        hibernate:
+          format_sql: true

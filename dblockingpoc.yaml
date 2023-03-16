@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dblockingpoc
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: dblockingpoc
+  template:
+    metadata:
+      labels:
+        app: dblockingpoc
+    spec:
+      containers:
+        - name: dblockingpoc
+          image: dblockingpoc:0.0.1-SNAPSHOT
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: dbpocsvc
+  labels:
+    app: dblockingpoc
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      nodePort: 30080
+  selector:
+    app: dblockingpoc
