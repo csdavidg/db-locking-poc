@@ -1,3 +1,4 @@
+#https://adamtheautomator.com/postgres-to-kubernetes/
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -91,3 +92,33 @@ spec:
       nodePort: 30000
   selector:
     app: postgres
+
+# CREATE TABLE public.ticket
+# (
+#     id serial NOT NULL,
+#     "position" character varying,
+#     name character varying,
+#     PRIMARY KEY (id)
+# );
+#
+# ALTER TABLE IF EXISTS public.ticket
+#     OWNER to appuser;
+
+# -- Table: public.bank_account
+#
+# -- DROP TABLE IF EXISTS public.bank_account;
+#
+# CREATE TABLE IF NOT EXISTS public.bank_account
+# (
+#     id integer NOT NULL DEFAULT nextval('bank_account_id_seq'::regclass),
+#     account_number character varying COLLATE pg_catalog."default",
+#     name character varying COLLATE pg_catalog."default",
+#     balance numeric,
+#     CONSTRAINT bank_account_pkey PRIMARY KEY (id),
+#     CONSTRAINT unique_account_number UNIQUE (account_number)
+# )
+#
+# TABLESPACE pg_default;
+#
+# ALTER TABLE IF EXISTS public.bank_account
+#     OWNER to appuser;
