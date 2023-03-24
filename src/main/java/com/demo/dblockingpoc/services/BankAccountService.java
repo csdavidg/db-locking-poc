@@ -5,6 +5,7 @@ import com.demo.dblockingpoc.records.AccountTransaction;
 import com.demo.dblockingpoc.records.BankAccountRecord;
 import com.demo.dblockingpoc.repositories.BankAccountRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BankAccountService {
@@ -15,28 +16,32 @@ public class BankAccountService {
         this.repository = repository;
     }
 
+    @Transactional
     public AccountTransaction accountTransaction(AccountTransaction transaction) {
 
-        BankAccount e = repository.findByAccountNumber(transaction.accountNumber()).orElseThrow();
+        BankAccount e;
         double newBalance;
 
         switch (transaction.type()) {
             case DEBIT -> {
+                e = repository.findByAccountNumberAndName(transaction.accountNumber(), transaction.name())
+                        .orElseThrow();
                 newBalance = e.getBalance() - transaction.amount();
+                if (newBalance < 0) {
+                    throw new IllegalArgumentException("Insufficient funds");
+                }
             }
             case CREDIT -> {
-                System.out.println("Old value " + e.getBalance());
+                e = repository.findByAccountNumber(transaction.accountNumber())
+                        .orElseThrow();
                 newBalance = e.getBalance() + transaction.amount();
-                if (newBalance < 0) {
-                    throw new IllegalArgumentException("Not enough funds to withdraw");
-                }
             }
             default -> throw new IllegalArgumentException("Invalid transaction type");
         }
-        System.out.println("New value " + newBalance);
+
         e.setBalance(newBalance);
         repository.save(e);
-        return new AccountTransaction(transaction.accountNumber(), transaction.type(), newBalance);
+        return new AccountTransaction(transaction.accountNumber(), transaction.name(), transaction.type(), newBalance);
     }
 
     public BankAccountRecord create(BankAccountRecord account) {
@@ -49,7 +54,7 @@ public class BankAccountService {
     }
 
     public BankAccountRecord checkBalance(BankAccountRecord account) {
-        return repository.findByAccountNumberAndName(account.accountNumber(), account.name())
+        return repository.findByName(account.name())
                 .map(ba -> new BankAccountRecord(ba.getId(), ba.getAccountNumber(), ba.getName(), ba.getBalance()))
                 .orElseThrow();
     }

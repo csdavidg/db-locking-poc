@@ -26,4 +26,7 @@ public class BankAccount {
     @Column
     private Double balance;
 
+    @Version
+    private Integer version;
+
 }

@@ -15,11 +15,10 @@ public class BankAccountController {
         this.service = service;
     }
 
-    @GetMapping("/name/{name}/number/{accountNumber}")
-    public BankAccountRecord checkBalance(@PathVariable("name") String name,
-                                          @PathVariable("accountNumber") String accountNumber) {
+    @GetMapping("/name/{name}")
+    public BankAccountRecord checkBalance(@PathVariable("name") String name) {
         System.out.println("CHECK BALANCE");
-        return service.checkBalance(new BankAccountRecord(accountNumber, name));
+        return service.checkBalance(new BankAccountRecord(name));
     }
 
     @PostMapping

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: dblockingpoc
-          image: dblockingpoc:0.0.1-SNAPSHOT
+          image: dblockingpoc:0.0.2-SNAPSHOT
           imagePullPolicy: "IfNotPresent"
           ports:
             - containerPort: 8080
