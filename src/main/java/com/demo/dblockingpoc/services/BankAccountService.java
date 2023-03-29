@@ -25,6 +25,7 @@ public class BankAccountService {
                 newBalance = e.getBalance() - transaction.amount();
             }
             case CREDIT -> {
+                System.out.println("Old value " + e.getBalance());
                 newBalance = e.getBalance() + transaction.amount();
                 if (newBalance < 0) {
                     throw new IllegalArgumentException("Not enough funds to withdraw");
@@ -32,7 +33,7 @@ public class BankAccountService {
             }
             default -> throw new IllegalArgumentException("Invalid transaction type");
         }
-
+        System.out.println("New value " + newBalance);
         e.setBalance(newBalance);
         repository.save(e);
         return new AccountTransaction(transaction.accountNumber(), transaction.type(), newBalance);
