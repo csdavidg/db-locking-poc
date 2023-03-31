@@ -34,11 +34,12 @@ public class BankAccountService {
             case CREDIT -> {
                 e = repository.findByAccountNumber(transaction.accountNumber())
                         .orElseThrow();
+                System.out.println("Old value " + e.getBalance());
                 newBalance = e.getBalance() + transaction.amount();
             }
             default -> throw new IllegalArgumentException("Invalid transaction type");
         }
-
+        System.out.println("New value " + newBalance);
         e.setBalance(newBalance);
         repository.save(e);
         return new AccountTransaction(transaction.accountNumber(), transaction.name(), transaction.type(), newBalance);
