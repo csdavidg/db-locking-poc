@@ -1,5 +1,7 @@
 # Optimistic and pessimistic locking proof of concept
 
+[More details can be found in this article](https://www.linkedin.com/pulse/implementing-optimistic-pessimistic-locking-spring-boot-sanchez)
+
 Optimistic and pessimistic locking are techniques used to avoid conflicts that arise when multiple instances or threads of an application attempt to access or update the same data simultaneously. This proof of concept (POC) was created to simulate the conditions in which these conflicts could occur and demonstrate how to avoid them using one or both approaches depending on the situation.
 
 This POC is a Java-based project was built using Spring Boot 3 and needs JDK 17 to be compiled and run.
